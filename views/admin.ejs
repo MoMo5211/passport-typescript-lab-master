@@ -1,0 +1,28 @@
+<section style="margin-top: 20vh;">
+    <h2>Dashboard</h2>
+    <p>Welcome <%= user ? user.name : 'Guest' %></p>
+    
+    <!-- Logout Button -->
+    <form action="/logout" method="POST" style="margin-bottom: 20px;">
+        <button type="submit">Log Out</button>
+    </form>
+    
+    <div style="margin-top: 20px;">
+        <h2 style="margin-bottom: 20px;">Active Sessions</h2>
+        <% if(Array.isArray(sessions)) { %>
+            <% sessions.forEach(function(session) { %>
+                <div style="margin-top: 20px;">
+                    <p>Session ID: <%= session.sid %></p>
+                    <p>UserID: <%= session.passport ? session.passport.user : 'Unknown' %></p>
+                    <form action="/admin/revoke-session" method="POST">
+                        <input type="hidden" name="sid" value="<%= session.sid %>">
+                        <button type="submit">Revoke Session</button>
+                    </form>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No active sessions found.</p>
+        <% } %>
+    </div>
+</section>
+
